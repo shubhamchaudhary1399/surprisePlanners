@@ -1,17 +1,15 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-const env = process.env.NODE_ENV;
-
 const typeOrmConfig: TypeOrmModuleOptions = {
-	name: 'surprise-db',
+	name: 'masterSurpriseDb',
 	type: 'postgres',
-	host: 'localhost',
-	port:  5432,
-	username: 'root',
-	password:  'postgre',
-	database:  'surprise-planners',
+	host: process.env.DB_HOST || 'localhost',
+	port: Number.parseInt(process.env.DB_PORT) || 5432,
+	username: process.env.DB_USERNAME || 'root',
+	password:  process.env.DB_PASSWORD || 'postgre',
+	database:  process.env.DB_DATABASE || 'surprise-planners',
 	entities: [__dirname + '/../modules/entities/*.entity.{ts,js}'],
-	synchronize: env === 'development'
+	synchronize: true
 };
 
 export { typeOrmConfig };
